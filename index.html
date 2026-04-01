@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CaféManager — Run Your Café Effortlessly</title>
+    <meta
+      name="description"
+      content="Orders, billing, payments, and real-time insights — all in one beautiful dashboard. Digitize your café operations."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: hsl(30, 25%, 97%);
+        --fg: hsl(25, 30%, 12%);
+        --card: hsl(30, 20%, 99%);
+        --primary: hsl(25, 75%, 47%);
+        --primary-fg: hsl(30, 25%, 97%);
+        --secondary: hsl(30, 30%, 92%);
+        --muted: hsl(30, 15%, 94%);
+        --muted-fg: hsl(25, 10%, 45%);
+        --accent: hsl(160, 40%, 40%);
+        --accent-fg: hsl(30, 25%, 97%);
+        --border: hsl(30, 20%, 88%);
+        --cafe-warm: hsl(35, 80%, 55%);
+        --cafe-sage: hsl(150, 25%, 55%);
+        --destructive: hsl(0, 84%, 60%);
+        --radius: 0.75rem;
+        --font-display: "Playfair Display", serif;
+        --font-body: "DM Sans", sans-serif;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--font-body);
+        line-height: 1.6;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: var(--font-display);
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      /* Animations */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .animate-fade-up {
+        animation: fadeUp 0.6s ease forwards;
+        opacity: 0;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.6s ease forwards;
+        opacity: 0;
+      }
+      .delay-1 {
+        animation-delay: 0.1s;
+      }
+      .delay-2 {
+        animation-delay: 0.2s;
+      }
+      .delay-3 {
+        animation-delay: 0.3s;
+      }
+      .delay-4 {
+        animation-delay: 0.4s;
+      }
+      .delay-5 {
+        animation-delay: 0.5s;
+      }
+
+      /* Navbar */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        background: hsla(30, 25%, 97%, 0.8);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .navbar .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+      }
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+      .nav-brand svg {
+        color: var(--primary);
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+      .nav-links a {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--muted-fg);
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--fg);
+      }
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .nav-mobile-toggle {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--fg);
+      }
+      .nav-mobile-menu {
+        display: none;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 1.5rem;
+      }
+      .nav-mobile-menu.open {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .nav-mobile-menu a {
+        font-size: 0.875rem;
+        color: var(--muted-fg);
+        padding: 0.5rem 0;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links,
+        .nav-actions {
+          display: none;
+        }
+        .nav-mobile-toggle {
+          display: block;
+        }
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1.5rem;
+        border-radius: var(--radius);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: var(--primary-fg);
+      }
+      .btn-primary:hover {
+        filter: brightness(1.1);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--fg);
+        border: 1px solid var(--border);
+      }
+      .btn-outline:hover {
+        background: var(--muted);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--muted-fg);
+      }
+      .btn-ghost:hover {
+        color: var(--fg);
+        background: var(--muted);
+      }
+      .btn-secondary {
+        background: var(--secondary);
+        color: var(--fg);
+      }
+      .btn-secondary:hover {
+        filter: brightness(0.97);
+      }
+      .btn-lg {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+      }
+      .btn-sm {
+        padding: 0.375rem 1rem;
+        font-size: 0.8125rem;
+      }
+
+      /* Hero */
+      .hero {
+        position: relative;
+        padding: 8rem 0 5rem;
+        overflow: hidden;
+        text-align: center;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 5rem;
+        right: 10%;
+        width: 18rem;
+        height: 18rem;
+        border-radius: 50%;
+        background: hsla(25, 75%, 47%, 0.05);
+        filter: blur(60px);
+        z-index: -1;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        bottom: 2rem;
+        left: 5%;
+        width: 24rem;
+        height: 24rem;
+        border-radius: 50%;
+        background: hsla(160, 40%, 40%, 0.05);
+        filter: blur(60px);
+        z-index: -1;
+      }
+      .hero-badge {
+        display: inline-block;
+        padding: 0.375rem 1rem;
+        border-radius: 9999px;
+        background: hsla(25, 75%, 47%, 0.1);
+        color: var(--primary);
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+      }
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+      }
+      .hero h1 span {
+        color: var(--primary);
+      }
+      .hero p.subtitle {
+        font-size: 1.125rem;
+        color: var(--muted-fg);
+        max-width: 40rem;
+        margin: 0 auto 2.5rem;
+      }
+      .hero-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .hero-note {
+        margin-top: 1.5rem;
+        font-size: 0.875rem;
+        color: var(--muted-fg);
+      }
+
+      /* Dashboard Preview */
+      .dashboard-preview {
+        margin-top: 4rem;
+        max-width: 64rem;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--card);
+        box-shadow: 0 25px 50px -12px hsla(25, 75%, 47%, 0.05);
+        overflow: hidden;
+      }
+      .dashboard-titlebar {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--border);
+        background: hsla(30, 15%, 94%, 0.5);
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+      .dot-red {
+        background: hsla(0, 84%, 60%, 0.6);
+      }
+      .dot-yellow {
+        background: hsla(35, 80%, 55%, 0.6);
+      }
+      .dot-green {
+        background: hsla(150, 25%, 55%, 0.6);
+      }
+      .dashboard-titlebar span {
+        margin-left: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--muted-fg);
+      }
+      .dashboard-body {
+        padding: 1.5rem 2rem;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .stat-card {
+        border-radius: 0.5rem;
+        background: hsla(30, 15%, 94%, 0.5);
+        border: 1px solid var(--border);
+        padding: 1rem;
+      }
+      .stat-card .label {
+        font-size: 0.75rem;
+        color: var(--muted-fg);
+      }
+      .stat-card .value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        font-family: var(--font-display);
+        margin-top: 0.25rem;
+      }
+      .stat-card .change {
+        font-size: 0.75rem;
+        color: var(--accent);
+        font-weight: 500;
+      }
+      .dashboard-bottom {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1rem;
+      }
+      .chart-area {
+        border-radius: 0.5rem;
+        background: hsla(30, 15%, 94%, 0.3);
+        border: 1px solid var(--border);
+        padding: 1rem;
+        height: 8rem;
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+      }
+      .bar-bg {
+        flex: 1;
+        border-radius: 4px 4px 0 0;
+        background: hsla(25, 75%, 47%, 0.2);
+        position: relative;
+      }
+      .bar-fg {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--primary);
+        border-radius: 4px 4px 0 0;
+      }
+      .orders-area {
+        border-radius: 0.5rem;
+        background: hsla(30, 15%, 94%, 0.3);
+        border: 1px solid var(--border);
+        padding: 1rem;
+      }
+      .orders-area .title {
+        font-size: 0.75rem;
+        color: var(--muted-fg);
+        margin-bottom: 0.75rem;
+      }
+      .order-item {
+        font-size: 0.875rem;
+        padding: 0.375rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .order-item:last-child {
+        border-bottom: none;
+      }
+
+      @media (max-width: 768px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .dashboard-bottom {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Features */
+      .features {
+        padding: 5rem 0;
+        background: hsla(30, 15%, 94%, 0.3);
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+      .section-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--primary);
+      }
+      .section-title {
+        font-size: clamp(1.875rem, 4vw, 3rem);
+        font-weight: 700;
+        margin-top: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      .section-desc {
+        font-size: 1.125rem;
+        color: var(--muted-fg);
+        max-width: 40rem;
+        margin: 0 auto;
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      .feature-card {
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--card);
+        padding: 1.5rem;
+        transition: box-shadow 0.3s;
+      }
+      .feature-card:hover {
+        box-shadow: 0 10px 30px -10px hsla(25, 75%, 47%, 0.1);
+      }
+      .feature-icon {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.5rem;
+        background: hsla(25, 75%, 47%, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        color: var(--primary);
+        transition: background 0.2s;
+      }
+      .feature-card:hover .feature-icon {
+        background: hsla(25, 75%, 47%, 0.2);
+      }
+      .feature-card h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .feature-card p {
+        font-size: 0.875rem;
+        color: var(--muted-fg);
+        line-height: 1.7;
+      }
+
+      @media (max-width: 768px) {
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* How It Works */
+      .how-it-works {
+        padding: 5rem 0;
+      }
+      .steps {
+        max-width: 48rem;
+        margin: 0 auto;
+      }
+      .step {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .step:last-child {
+        margin-bottom: 0;
+      }
+      .step-indicator {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .step-circle {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        background: hsla(25, 75%, 47%, 0.1);
+        border: 2px solid hsla(25, 75%, 47%, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--primary);
+      }
+      .step-line {
+        width: 2px;
+        height: 2.5rem;
+        background: var(--border);
+        margin-top: 0.5rem;
+      }
+      .step-content {
+        padding-top: 0.5rem;
+      }
+      .step-content h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+      .step-content p {
+        color: var(--muted-fg);
+        line-height: 1.7;
+      }
+
+      /* Testimonials */
+      .testimonials {
+        padding: 5rem 0;
+        background: hsla(30, 15%, 94%, 0.3);
+      }
+      .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        max-width: 64rem;
+        margin: 0 auto;
+      }
+      .testimonial-card {
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--card);
+        padding: 1.5rem;
+      }
+      .stars {
+        display: flex;
+        gap: 2px;
+        margin-bottom: 1rem;
+      }
+      .star {
+        color: var(--cafe-warm);
+      }
+      .testimonial-card blockquote {
+        font-size: 0.875rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+      }
+      .testimonial-card .author {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+      .testimonial-card .role {
+        font-size: 0.75rem;
+        color: var(--muted-fg);
+      }
+
+      @media (max-width: 768px) {
+        .testimonials-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* CTA */
+      .cta {
+        padding: 5rem 0;
+      }
+      .cta-box {
+        max-width: 56rem;
+        margin: 0 auto;
+        border-radius: 1rem;
+        background: var(--primary);
+        padding: 4rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .cta-box::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          hsla(35, 80%, 55%, 0.2),
+          transparent 60%
+        );
+      }
+      .cta-box > * {
+        position: relative;
+        z-index: 1;
+      }
+      .cta-box h2 {
+        font-size: clamp(1.875rem, 4vw, 3rem);
+        font-weight: 700;
+        color: var(--primary-fg);
+        margin-bottom: 1rem;
+      }
+      .cta-box p {
+        color: hsla(30, 25%, 97%, 0.8);
+        font-size: 1.125rem;
+        max-width: 32rem;
+        margin: 0 auto 2rem;
+      }
+      .cta-box .note {
+        margin-top: 1rem;
+        color: hsla(30, 25%, 97%, 0.6);
+        font-size: 0.875rem;
+      }
+
+      /* Footer */
+      .footer {
+        border-top: 1px solid var(--border);
+        padding: 3rem 0;
+      }
+      .footer .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+      }
+      .footer-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .footer-links a {
+        font-size: 0.875rem;
+        color: var(--muted-fg);
+        transition: color 0.2s;
+      }
+      .footer-links a:hover {
+        color: var(--fg);
+      }
+      .footer-copy {
+        font-size: 0.75rem;
+        color: var(--muted-fg);
+      }
+
+      @media (max-width: 768px) {
+        .footer .container {
+          flex-direction: column;
+          text-align: center;
+        }
+        .hero {
+          padding: 7rem 0 3rem;
+        }
+        .cta-box {
+          padding: 2.5rem 1.5rem;
+        }
+      }
+
+      /* Scroll reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="#" class="nav-brand">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+            <line x1="6" x2="6" y1="2" y2="4" />
+            <line x1="10" x2="10" y1="2" y2="4" />
+            <line x1="14" x2="14" y1="2" y2="4" />
+          </svg>
+          CaféManager
+        </a>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#testimonials">Testimonials</a>
+        </div>
+        <div class="nav-actions">
+          <button class="btn btn-ghost btn-sm" onclick="goToProduct()">
+            Log in
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="goToProduct()">
+            Get Started Free
+          </button>
+        </div>
+        <button
+          class="nav-mobile-toggle"
+          onclick="document.getElementById('mobile-menu').classList.toggle('open')"
+          aria-label="Toggle menu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="nav-mobile-menu">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#testimonials">Testimonials</a>
+        <hr
+          style="
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 0.5rem 0;
+          "
+        />
+        <button class="btn btn-ghost btn-sm" style="justify-content: center">
+          Log in
+        </button>
+        <button class="btn btn-primary btn-sm" style="justify-content: center">
+          Get Started Free
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div style="max-width: 56rem; margin: 0 auto">
+          <span class="hero-badge animate-fade-up"
+            >☕ Built for Café Owners</span
+          >
+          <h1 class="animate-fade-up delay-1">
+            Run Your Café<br /><span>Effortlessly</span>
+          </h1>
+          <p class="subtitle animate-fade-up delay-2">
+            Orders, billing, payments, and real-time insights — all in one
+            beautiful dashboard. Digitize your café operations and focus on what
+            matters: great coffee and happy customers.
+          </p>
+          <div class="hero-buttons animate-fade-up delay-3">
+            <button class="btn btn-primary btn-lg" onclick="goToProduct()">
+              Start Free Trial →
+            </button>
+            <button class="btn btn-outline btn-lg">▶ Watch Demo</button>
+          </div>
+          <p class="hero-note animate-fade-in delay-5">
+            No credit card required · Free 5-day trial · Setup in 5 minutes
+          </p>
+        </div>
+
+        <div class="dashboard-preview animate-fade-up delay-4">
+          <div class="dashboard-titlebar">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+            <span>CaféManager — Dashboard</span>
+          </div>
+          <div class="dashboard-body">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="label">Today's Revenue</div>
+                <div class="value">₹12,450</div>
+                <div class="change">+18%</div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Active Tables</div>
+                <div class="value">8 / 12</div>
+                <div class="change">67%</div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Orders Today</div>
+                <div class="value">47</div>
+                <div class="change">+12%</div>
+              </div>
+              <div class="stat-card">
+                <div class="label">Avg. Order Value</div>
+                <div class="value">₹265</div>
+                <div class="change">+5%</div>
+              </div>
+            </div>
+            <div class="dashboard-bottom">
+              <div class="chart-area" id="chart"></div>
+              <div class="orders-area">
+                <div class="title">Recent Orders</div>
+                <div class="order-item">Table 3 — ₹580</div>
+                <div class="order-item">Takeaway — ₹220</div>
+                <div class="order-item">Table 7 — ₹890</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Features</div>
+          <h2 class="section-title">Everything Your Café Needs</h2>
+          <p class="section-desc">
+            From the first order of the day to the final reconciliation —
+            CaféManager handles it all so you can focus on brewing perfection.
+          </p>
+        </div>
+        <div class="features-grid" id="features-grid"></div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">How It Works</div>
+          <h2 class="section-title">Up & Running in Minutes</h2>
+          <p class="section-desc">
+            No complicated setup. No steep learning curve. Just simple tools
+            that work.
+          </p>
+        </div>
+        <div class="steps" id="steps"></div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Testimonials</div>
+          <h2 class="section-title">Loved by Café Owners</h2>
+        </div>
+        <div class="testimonials-grid" id="testimonials-grid"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box reveal">
+          <h2>Ready to Simplify Your Café?</h2>
+          <p>
+            Join hundreds of café owners who have ditched pen-and-paper chaos
+            for a smarter way to run their business.
+          </p>
+          <button class="btn btn-secondary btn-lg" onclick="goToProduct()">
+            Get Started Free →
+          </button>
+          <div class="note">No credit card required · Cancel anytime</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <a href="#" class="nav-brand">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="color: var(--primary)"
+          >
+            <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+            <line x1="6" x2="6" y1="2" y2="4" />
+            <line x1="10" x2="10" y1="2" y2="4" />
+            <line x1="14" x2="14" y1="2" y2="4" />
+          </svg>
+          CaféManager
+        </a>
+        <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Support</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-copy">© 2026 CaféManager. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <script>
+      // Chart bars
+      const chartEl = document.getElementById("chart");
+      const heights = [40, 65, 45, 80, 55, 70, 90, 60, 75, 85, 50, 95];
+      heights.forEach((h) => {
+        const bar = document.createElement("div");
+        bar.className = "bar-bg";
+        bar.style.height = h + "%";
+        const fg = document.createElement("div");
+        fg.className = "bar-fg";
+        fg.style.height = h * 0.7 + "%";
+        bar.appendChild(fg);
+        chartEl.appendChild(bar);
+      });
+
+      // Features
+      const features = [
+        {
+          icon: "🛒",
+          title: "Order Management",
+          desc: "Handle dine-in table orders and takeaway seamlessly. Track order status in real-time with instant updates.",
+        },
+        {
+          icon: "💳",
+          title: "Smart Billing",
+          desc: "Generate bills instantly with support for multiple payment modes — cash, UPI, card, and split payments.",
+        },
+        {
+          icon: "📊",
+          title: "Real-Time Dashboard",
+          desc: "Track daily revenue, active tables, and order metrics at a glance. Make data-driven decisions effortlessly.",
+        },
+        {
+          icon: "👛",
+          title: "Expense Tracking",
+          desc: "Monitor business spending and calculate profitability. Keep tabs on every rupee going in and out.",
+        },
+        {
+          icon: "📐",
+          title: "Table Management",
+          desc: "Visual table layout with live occupancy status. Assign, merge, or transfer orders between tables easily.",
+        },
+        {
+          icon: "🔒",
+          title: "Secure & Reliable",
+          desc: "JWT-based authentication keeps your data safe. Role-based access for owners, managers, and staff.",
+        },
+      ];
+      const fGrid = document.getElementById("features-grid");
+      features.forEach((f, i) => {
+        const card = document.createElement("div");
+        card.className = "feature-card reveal";
+        card.style.transitionDelay = i * 0.1 + "s";
+        card.innerHTML = `<div class="feature-icon" style="font-size:1.5rem;">${f.icon}</div><h3>${f.title}</h3><p>${f.desc}</p>`;
+        fGrid.appendChild(card);
+      });
+
+      // Steps
+      const steps = [
+        {
+          n: "01",
+          title: "Sign Up & Set Up",
+          desc: "Create your account, add your menu items, and configure your table layout. Takes less than 5 minutes.",
+        },
+        {
+          n: "02",
+          title: "Start Taking Orders",
+          desc: "Take table or takeaway orders with a tap. Your staff can start using it right away — no training needed.",
+        },
+        {
+          n: "03",
+          title: "Bill & Collect Payments",
+          desc: "Generate bills instantly and accept payments via cash, UPI, or card. Split bills between guests effortlessly.",
+        },
+        {
+          n: "04",
+          title: "Track & Grow",
+          desc: "Monitor daily revenue, expenses, and profitability from your real-time dashboard. Spot trends and grow smarter.",
+        },
+      ];
+      const stepsEl = document.getElementById("steps");
+      steps.forEach((s, i) => {
+        const step = document.createElement("div");
+        step.className = "step reveal";
+        step.style.transitionDelay = i * 0.15 + "s";
+        const line =
+          i < steps.length - 1 ? '<div class="step-line"></div>' : "";
+        step.innerHTML = `<div class="step-indicator"><div class="step-circle">${s.n}</div>${line}</div><div class="step-content"><h3>${s.title}</h3><p>${s.desc}</p></div>`;
+        stepsEl.appendChild(step);
+      });
+
+      // Testimonials
+      const testimonials = [
+        {
+          name: "Priya Sharma",
+          role: "Owner, Brew & Bites Café",
+          quote:
+            "CaféManager transformed how we handle daily operations. Billing used to be a nightmare — now it's one tap. Our revenue tracking is finally accurate.",
+        },
+        {
+          name: "Rahul Menon",
+          role: "Manager, The Filter House",
+          quote:
+            "The table management feature alone saved us 30 minutes every shift. My staff picked it up in under an hour. Couldn't run my café without it now.",
+        },
+        {
+          name: "Ananya Desai",
+          role: "Owner, Bean There Café",
+          quote:
+            "Finally, a POS system that understands small cafés. The expense tracker helped me realize where I was bleeding money. Profits are up 20% since we started.",
+        },
+      ];
+      const tGrid = document.getElementById("testimonials-grid");
+      testimonials.forEach((t, i) => {
+        const card = document.createElement("div");
+        card.className = "testimonial-card reveal";
+        card.style.transitionDelay = i * 0.1 + "s";
+        const starsHTML = "★★★★★"
+          .split("")
+          .map((s) => `<span class="star">${s}</span>`)
+          .join("");
+        card.innerHTML = `<div class="stars">${starsHTML}</div><blockquote>"${t.quote}"</blockquote><div class="author">${t.name}</div><div class="role">${t.role}</div>`;
+        tGrid.appendChild(card);
+      });
+
+      // Scroll reveal
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+
+      // Smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const target = document.querySelector(a.getAttribute("href"));
+          if (target) target.scrollIntoView({ behavior: "smooth" });
+          const menu = document.getElementById("mobile-menu");
+          if (menu) menu.classList.remove("open");
+        });
+      });
+
+      function goToProduct() {
+        href = "https://cafe-frontend-sable.vercel.app";
+      }
+    </script>
+  </body>
+</html>
