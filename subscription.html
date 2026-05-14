@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CaféManager Pricing Plans</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="subscription.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="index.html" class="nav-brand">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+            <line x1="6" x2="6" y1="2" y2="4" />
+            <line x1="10" x2="10" y1="2" y2="4" />
+            <line x1="14" x2="14" y1="2" y2="4" />
+          </svg>
+          CaféManager
+        </a>
+
+        <div class="nav-actions">
+          <button class="btn btn-outline" onclick="goBack()">
+            Back To Home
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="pricing-badge">☕ SIMPLE & FLEXIBLE PRICING</div>
+
+        <h1>
+          Choose The Perfect Plan <br />
+          For Your <span>Café</span>
+        </h1>
+
+        <p>
+          Start with Limited and upgrade anytime as your café grows. Every plan
+          is built to simplify operations, improve customer experience, and help
+          your business grow faster.
+        </p>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing-section">
+      <div class="container">
+        <div class="pricing-grid">
+          <!-- Limited -->
+          <div class="pricing-card">
+            <h2 class="plan-name">Limited</h2>
+
+            <p class="plan-desc">
+              Perfect for cafés that want complete digital management without QR
+              ordering.
+            </p>
+
+            <div class="price">
+              <h2>9999</h2>
+              <span>/Yearly</span>
+            </div>
+
+            <div class="features">
+              <div class="feature-item">✅ Unlimited table management</div>
+
+              <div class="feature-item">✅ Multiple screen support</div>
+
+              <div class="feature-item">✅ Multiple staff logins</div>
+
+              <div class="feature-item">✅ Live order dashboard</div>
+
+              <div class="feature-item">✅ Smart billing system</div>
+
+              <div class="feature-item">✅ Revenue analytics</div>
+
+              <div class="feature-item">✅ Kitchen management screen</div>
+
+              <div class="feature-item">✅ GST billing support</div>
+            </div>
+
+            <button class="btn btn-outline" onclick="selectPlan('Limited')">
+              Start Free Trial
+            </button>
+          </div>
+
+          <!-- Prime -->
+          <div class="pricing-card popular">
+            <div class="popular-badge">MOST POPULAR</div>
+
+            <h2 class="plan-name">Prime</h2>
+
+            <p class="plan-desc">
+              Everything in Limited plus smart QR ordering and customer self
+              service.
+            </p>
+
+            <div class="price">
+              <h2>₹19999</h2>
+              <span>/Yearly</span>
+            </div>
+
+            <div class="features">
+              <div class="feature-item">✅ Everything in Limited</div>
+
+              <div class="feature-item">✅ QR code table ordering</div>
+
+              <div class="feature-item">✅ Customer self ordering</div>
+
+              <div class="feature-item">✅ Online payment integration</div>
+
+              <div class="feature-item">✅ Digital menu system</div>
+
+              <div class="feature-item">✅ Contactless ordering experience</div>
+
+              <div class="feature-item">✅ Real-time kitchen updates</div>
+
+              <div class="feature-item">✅ Auto online bill generation</div>
+            </div>
+
+            <button class="btn btn-primary" onclick="selectPlan('Prime')">
+              Get Prime Access
+            </button>
+          </div>
+
+          <!-- Prime Plus -->
+          <div class="pricing-card">
+            <h2 class="plan-name">Prime Plus</h2>
+
+            <p class="plan-desc">
+              Complete branded café ecosystem with your own dedicated customer
+              mobile app.
+            </p>
+
+            <div class="price">
+              <h2>₹29999</h2>
+              <span>/Yearly</span>
+            </div>
+
+            <div class="features">
+              <div class="feature-item">✅ Everything in Prime</div>
+
+              <div class="feature-item">✅ Dedicated mobile application</div>
+
+              <div class="feature-item">
+                ✅ Play Store & App Store publishing
+              </div>
+
+              <div class="feature-item">✅ Custom café branding</div>
+
+              <div class="feature-item">✅ Loyalty rewards system</div>
+
+              <div class="feature-item">✅ Weekly promotional offers</div>
+
+              <div class="feature-item">✅ WhatsApp marketing support</div>
+
+              <div class="feature-item">✅ Push notifications & campaigns</div>
+            </div>
+
+            <button class="btn btn-outline" onclick="selectPlan('Prime Plus')">
+              Book Demo
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bottom-cta">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Digitize Your Café Today</h2>
+
+          <p>
+            Join modern café owners who are simplifying operations, improving
+            customer experience, and increasing profits using CaféManager.
+          </p>
+
+          <button class="cta-btn" onclick="startTrial()">
+            Start Free 5-Day Trial →
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- Lead Form Modal -->
+    <div class="modal-overlay" id="leadModal">
+      <div class="lead-modal">
+        <button class="close-btn" onclick="closeModal()">✕</button>
+
+        <h2>Start Your Free Trial</h2>
+
+        <p class="modal-subtitle">
+          Fill your details and our team will contact you shortly.
+        </p>
+
+        <form id="leadForm">
+          <input type="text" id="name" placeholder="Your Name" required />
+
+          <input type="tel" id="phone" placeholder="Phone Number" required />
+
+          <input type="email" id="email" placeholder="Email Address" required />
+
+          <input type="text" id="plan" placeholder="Selected Plan" readonly />
+
+          <textarea
+            id="message"
+            rows="4"
+            placeholder="Write your requirement..."
+          ></textarea>
+
+          <button type="submit" class="submit-btn">Submit Enquiry</button>
+        </form>
+
+        <div id="successMessage" class="success-message">
+          ✅ Thank you! Our team will reach out to you soon.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const modal = document.getElementById("leadModal");
+
+      function goBack() {
+        window.location.href = "index.html";
+      }
+
+      function openModal(planName = "") {
+        modal.style.display = "flex";
+
+        document.getElementById("plan").value = planName;
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      function startTrial() {
+        openModal("Free Trial");
+      }
+
+      function selectPlan(plan) {
+        openModal(plan);
+      }
+
+      // FORM SUBMIT
+      document
+        .getElementById("leadForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const data = {
+            name: document.getElementById("name").value,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value,
+            plan: document.getElementById("plan").value,
+            message: document.getElementById("message").value,
+          };
+
+          try {
+            const response = await fetch(
+              "http://localhost:8080/auth/client/leads",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              }
+            );
+
+            if (response.ok) {
+              document.getElementById("leadForm").reset();
+
+              document.getElementById("successMessage").style.display = "block";
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        });
+    </script>
+  </body>
+</html>
+```
