@@ -527,3 +527,73 @@ a {
   border-radius: 12px;
   text-align: center;
 }
+
+/* SUCCESS POPUP */
+
+.success-popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem;
+}
+
+.success-popup-content {
+  background: white;
+}
+
+.success-popup > div,
+.success-popup {
+  text-align: center;
+}
+
+.success-popup {
+  flex-direction: column;
+}
+
+.success-popup h2 {
+  font-size: 2rem;
+  margin-top: 1rem;
+  color: #2b1b12;
+}
+
+.success-popup p {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 1rem;
+}
+
+.success-icon {
+  font-size: 5rem;
+}
+
+.success-close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: white;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.success-ok-btn {
+  margin-top: 2rem;
+  background: #c96a1b;
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
