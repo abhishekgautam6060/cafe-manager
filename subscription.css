@@ -531,16 +531,18 @@ a {
 /* SUCCESS POPUP */
 
 .success-popup {
-  display: none;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
   z-index: 10000;
 
-  display: flex;
+  display: none;
+
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 
+  text-align: center;
   padding: 1rem;
 }
 
