@@ -712,6 +712,242 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      /* for scanner section css */
+
+      /* Digital Menu Section */
+      .digital-menu-section {
+        padding: 6rem 0;
+        background: var(--bg);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .digital-menu-section::before {
+        content: "";
+        position: absolute;
+        top: -120px;
+        right: -120px;
+        width: 320px;
+        height: 320px;
+        background: hsla(25, 75%, 47%, 0.08);
+        border-radius: 50%;
+        filter: blur(60px);
+      }
+
+      .digital-menu-section::after {
+        content: "";
+        position: absolute;
+        bottom: -120px;
+        left: -120px;
+        width: 320px;
+        height: 320px;
+        background: hsla(160, 40%, 40%, 0.08);
+        border-radius: 50%;
+        filter: blur(60px);
+      }
+
+      .digital-menu-wrapper {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .digital-menu-tag {
+        display: inline-block;
+        padding: 0.45rem 1rem;
+        border-radius: 999px;
+        background: hsla(25, 75%, 47%, 0.1);
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+      }
+
+      .digital-menu-content h2 {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+      }
+
+      .digital-menu-content p {
+        font-size: 1.05rem;
+        line-height: 1.9;
+        color: var(--muted-fg);
+        margin-bottom: 2rem;
+        max-width: 35rem;
+      }
+
+      .digital-menu-visual {
+        position: relative;
+        min-height: 500px;
+      }
+
+      .menu-dashboard {
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        max-width: 480px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 1.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 25px 50px -12px hsla(25, 75%, 47%, 0.12);
+      }
+
+      .menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+      }
+
+      .menu-title {
+        font-weight: 700;
+        font-family: var(--font-display);
+      }
+
+      .menu-create-btn {
+        background: var(--primary);
+        color: var(--primary-fg);
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.7rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+      }
+
+      .menu-cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .menu-card {
+        background: hsla(30, 15%, 94%, 0.6);
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        padding: 1rem;
+      }
+
+      .menu-card h4 {
+        font-size: 1rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .menu-card p {
+        font-size: 0.8rem;
+        color: var(--muted-fg);
+      }
+
+      .floating-card {
+        position: absolute;
+        top: 0;
+        left: 20px;
+        width: 260px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 1.25rem;
+        padding: 1.5rem;
+        box-shadow: 0 20px 40px -12px hsla(25, 75%, 47%, 0.1);
+      }
+
+      .floating-card h4 {
+        color: var(--primary);
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .floating-card p {
+        color: var(--muted-fg);
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+
+      .qr-popup {
+        position: absolute;
+        left: -20px;
+        bottom: -30px;
+        width: 260px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 1.5rem;
+        padding: 1rem;
+        box-shadow: 0 25px 50px -12px hsla(25, 75%, 47%, 0.12);
+      }
+
+      .qr-popup h5 {
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+      }
+
+      .qr-box {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .qr-box img {
+        width: 160px;
+        height: 160px;
+      }
+
+      .qr-footer {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .qr-footer button {
+        flex: 1;
+        border: none;
+        border-radius: 0.7rem;
+        padding: 0.75rem;
+        font-size: 0.82rem;
+        cursor: pointer;
+      }
+
+      .qr-close {
+        background: var(--secondary);
+      }
+
+      .qr-download {
+        background: var(--primary);
+        color: white;
+      }
+
+      @media (max-width: 900px) {
+        .digital-menu-wrapper {
+          grid-template-columns: 1fr;
+        }
+
+        .digital-menu-visual {
+          min-height: 650px;
+        }
+
+        .menu-dashboard {
+          position: relative;
+          top: 100px;
+          margin: auto;
+        }
+
+        .floating-card {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .qr-popup {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
     </style>
   </head>
   <body>
@@ -744,10 +980,10 @@
           <a href="#testimonials">Testimonials</a>
         </div>
         <div class="nav-actions">
-          <button class="btn btn-ghost btn-sm" onclick="goToProduct()">
+          <button class="btn btn-ghost btn-sm" onclick="goToPricing()">
             Log in
           </button>
-          <button class="btn btn-primary btn-sm" onclick="goToProduct()">
+          <button class="btn btn-primary btn-sm" onclick="goToPricing()">
             Get Started Free
           </button>
         </div>
@@ -809,7 +1045,7 @@
             matters: great coffee and happy customers.
           </p>
           <div class="hero-buttons animate-fade-up delay-3">
-            <button class="btn btn-primary btn-lg" onclick="goToProduct()">
+            <button class="btn btn-primary btn-lg" onclick="goToPricing()">
               Start Free Trial →
             </button>
             <button class="btn btn-outline btn-lg">▶ Watch Demo</button>
@@ -892,6 +1128,87 @@
         <div class="steps" id="steps"></div>
       </div>
     </section>
+    <!-- Digital Menu Section -->
+    <!-- Digital Menu Section -->
+    <section class="digital-menu-section">
+      <div class="container">
+        <div class="digital-menu-wrapper">
+          <div class="digital-menu-content reveal">
+            <div class="digital-menu-tag">DIGITAL MENUS</div>
+
+            <h2>Beautiful Digital Menus with QR Codes</h2>
+
+            <p>
+              Create beautiful digital menus in minutes and share them via QR
+              codes. Customers browse directly on their phones while you update
+              menu items and prices anytime without reprinting menus.
+            </p>
+
+            <button class="btn btn-primary btn-lg" onclick="goToPricing()">
+              Start Free Trial →
+            </button>
+          </div>
+
+          <div class="digital-menu-visual reveal">
+            <div class="floating-card">
+              <h4>＋ Create Digital Menu</h4>
+
+              <p>
+                Customers can instantly scan and browse your café menu directly
+                from their phones — fast, modern, and contactless.
+              </p>
+            </div>
+
+            <div class="menu-dashboard">
+              <div class="menu-header">
+                <div class="menu-title">📋 Digital Menus</div>
+
+                <button class="menu-create-btn">+ Create Menu</button>
+              </div>
+
+              <div class="menu-cards">
+                <div class="menu-card">
+                  <h4>Classic Brew</h4>
+                  <p>Elegant café menu</p>
+                </div>
+
+                <div class="menu-card">
+                  <h4>Modern Coffee</h4>
+                  <p>Minimal style menu</p>
+                </div>
+
+                <div class="menu-card">
+                  <h4>Tea House</h4>
+                  <p>Premium tea layout</p>
+                </div>
+
+                <div class="menu-card">
+                  <h4>Night Café</h4>
+                  <p>Dark modern menu</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="qr-popup">
+              <h5>QR Code - menu1</h5>
+
+              <div class="qr-box">
+                <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://cafe-frontend-sable.vercel.app"
+                  alt="QR Code"
+                />
+              </div>
+
+              <div class="qr-footer">
+                <button class="qr-close">Close</button>
+
+                <button class="qr-download">Download QR</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Testimonials -->
     <section class="testimonials" id="testimonials">
@@ -913,7 +1230,7 @@
             Join hundreds of café owners who have ditched pen-and-paper chaos
             for a smarter way to run their business.
           </p>
-          <button class="btn btn-secondary btn-lg" onclick="goToProduct()">
+          <button class="btn btn-secondary btn-lg" onclick="goToPricing()">
             Get Started Free →
           </button>
           <div class="note">No credit card required · Cancel anytime</div>
@@ -1107,8 +1424,8 @@
         });
       });
 
-      function goToProduct() {
-        window.location.href = "https://cafe-frontend-sable.vercel.app";
+      function goToPricing() {
+        window.location.href = "./subscription.html";
       }
     </script>
   </body>
